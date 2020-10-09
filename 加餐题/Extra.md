@@ -23,8 +23,44 @@ var fizzBuzz = function(n) {
 };
 ```
 
+
 ### 657. 机器人能否返回原点
+```js
+var judgeCircle = function(moves) {
+  let x = 0; // x轴
+  let y = 0; // y轴
+  moves.split('').forEach(v => {
+    switch (v) {
+      case 'U':
+        y++;
+        break;
+      case 'D':
+        y--;
+        break;
+      case 'L':
+        x--;
+        break;
+      case 'R':
+        x++;
+        break;
+    }
+  })
+  return x == 0 && y == 0
+};
+```
+
 
 ### 面试题 01.01. 判定字符是否唯一
 实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
+```js
+var isUnique = function(astr) {
+  let isUnique = true
+  for (let i = 0; i < astr.length; i++) {
+    if (astr.indexOf(astr[i]) !== astr.lastIndexOf(astr[i])) {
+      isUnique = false
+    }
+  }
+  return isUnique
+};
+```
 

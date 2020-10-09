@@ -85,11 +85,70 @@ var minDepth = function(root) {
 }
 ```
 
+
 ### 二叉树的序列化与反序列化
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function(root) {
+  if (!root) return 'X,'
+  return root.val + ',' + serialize(root.left) + serialize(root.right)
+};
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function(data) {
+  const list = data.split(',')
+  const buildTree = list => {
+    const val = list.shift()
+    if (val === 'X') {
+      return null
+    }
+    const root = new TreeNode(val)
+    root.left = buildTree(list)
+    root.right = buildTree(list)
+    return root
+  }
+  return buildTree(list)
+};
+```
+
 
 ### 二叉树的最近公共祖先
+由于二叉树的性质，如果p.val和q.val都比root.val小，那么p、q肯定在root的左子树，此时递归左子树。如果 p.val 和 q.val 都比 root.val 大，则递归右子树。
+
+其他情况，不管是一个大于 root.val 一个小于 root.val，还是一个等于一个小于，还是一个等于一个大于，root 即为所求。
+```js
+const lowestCommonAncestor = (root, p, q) => {
+  if (p.val < root.val && q.val < root.val) {
+    return lowestCommonAncestor(root.left, p, q)
+  }
+  if (p.val > root.val && q.val > root.val) {
+    return lowestCommonAncestor(root.right, p, q)
+  }
+  return root
+};
+```
+
 
 ### 从前序与中序遍历构造二叉树
+
 
 
 ### 组合
