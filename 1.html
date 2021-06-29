@@ -1,47 +1,24 @@
 <script>
-var findAnagrams = function (s, p) {
-  let need = new Map()
-  let window = new Map()
-
-  // 统计 p 的字母次数
-  for (let ch of p) {
-    need.set(ch, (need.get(ch) || 0) + 1)
-  }
-  console.log(need)
-
-  let left = 0, 
-      right = 0,
-      res = [],
-      sLen = s.length,
-      pLen = p.length
-  while (right < sLen) {
-    addWindow(window, s[right++])
-    if (right - left === pLen) {
-      if (match(window, need)) {
-        res.push(left)
+var maxPoints = function(points) {
+  // y = ax + b
+  // a = (y2 - y1) - (x2 - x1)
+  // b = y1 - a * x1
+  const map = {}
+  for (let i = 0; i < points.length - 2; i++) {
+    for (let j = i; j < points.length - 1; j++) {
+      const [x1, y1] = points[i]
+      const [x2, y2] = points[j]
+      let a, b
+      if (x2 === x1) {
+        a = 0
+      } else {
+        a = (y2 - y1) / (x2 - x1)
       }
-      removeWindow(window, s[left++])
+      b = y1 - a * x1
+      map[`${a}-${b}`] = (map[`${a}-${b}`] || 0) + 1
     }
   }
-  return res
-}
-
-function addWindow (window, ch) {
-  window.set(ch, (window.get(ch) || 0) + 1)
-}
-
-function removeWindow (window, ch) {
-  window.set(ch, window.get(ch) - 1)
-}
-
-function match (window, need) {
-  let matchFlag = true
-  for (let [key, value] of need) {
-    if (!window.has(key) || window.get(key) !== value) {
-      matchFlag = false
-    }
-  }
-  return matchFlag
-}
-console.log(findAnagrams("cbaebabacd", "abc"))
+  console.log(map)
+};
+console.log(maxPoints([[1,1],[2,2],[3,3]]))
 </script>
