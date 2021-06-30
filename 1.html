@@ -1,40 +1,17 @@
 <script>
-const largestRectangleArea = heights => {
-  const n = heights.length
-  let maxArea = 0
-  for (let mid = 0; mid < n; mid++) {
-    const height = heights[mid]
-    let left = mid, right = mid
-    // 确定左右边界
-    while (left - 1 >= 0 && heights[left - 1] >= height) {
-      left--
+var containsNearbyDuplicate = function(nums, k) {
+  const dict = new Map()
+  let minIndex = 0
+  for (let i = 0; i < nums.length; i++) {
+    if (i - dict.get(nums[i]) <= k) {
+      return true
     }
-    while (right + 1 < n && heights[right + 1] >= height) {
-      right++
+    dict.set(nums[i], i)
+    if (i - minIndex > k) {
+      minIndex++
     }
-    maxArea = Math.max(maxArea, (right - left + 1) * height)
   }
-  return maxArea
-}
-
-const maximalRectangle = function (matrix) {
-  if (matrix.length === 0) return 0
-  const rows = matrix.length,
-        cols = matrix[0].length,
-        heights = new Array(cols).fill(0)
-  let maxArea = 0
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (matrix[i][j] === '1') {
-        heights[j] += 1
-      } else {
-        heights[j] = 0
-      }
-    }
-    maxArea = Math.max(largestRectangleArea(heights), maxArea)
-  }
-  return maxArea
-}
-
-console.log(maximalRectangle([["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]))
+  return false
+};
+console.log(containsNearbyDuplicate([1,2,3,1,2,3], 2))
 </script>
