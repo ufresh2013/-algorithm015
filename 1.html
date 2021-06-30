@@ -1,17 +1,14 @@
 <script>
-var containsNearbyDuplicate = function(nums, k) {
-  const dict = new Map()
-  let minIndex = 0
-  for (let i = 0; i < nums.length; i++) {
-    if (i - dict.get(nums[i]) <= k) {
-      return true
-    }
-    dict.set(nums[i], i)
-    if (i - minIndex > k) {
-      minIndex++
+var numTrees = function(n) {
+  const dp = new Array(n + 1).fill(0)
+  dp[0] = 1
+  dp[1] = 1
+  for (let i = 2; i <= n; i++) {
+    for (let j = 1; j <= i; j++) {
+        dp[i] += dp[j - 1] * dp[i - j];
     }
   }
-  return false
-};
-console.log(containsNearbyDuplicate([1,2,3,1,2,3], 2))
+  return dp[n]
+}
+console.log(numTrees(3))
 </script>
