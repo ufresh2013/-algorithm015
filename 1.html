@@ -1,14 +1,19 @@
 <script>
-var numTrees = function(n) {
-  const dp = new Array(n + 1).fill(0)
-  dp[0] = 1
-  dp[1] = 1
-  for (let i = 2; i <= n; i++) {
-    for (let j = 1; j <= i; j++) {
-        dp[i] += dp[j - 1] * dp[i - j];
+var sumNumbers = function (root) {
+  if (!root) return null
+
+  const result = []
+  const dfs = (node, str) => {
+    if (!node) {
+      result.push(str)
     }
+    str += node.val
+    dfs(node.left, str)
+    dfs(node.right, str)
   }
-  return dp[n]
+  dfs(root, '')
+  console.log(result)
+  return result.reduce((total, cur) => total + parseInt(cur), 0)
 }
-console.log(numTrees(3))
+console.log(sumNumbers([1, 5, 9, 1, 5, 9], 2,3))
 </script>
